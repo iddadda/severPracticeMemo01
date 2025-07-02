@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.practicememoserver.MemoMapper">
+    <!--메모 등록-->
+    <insert id="save">
+        INSERT INTO memo
+        SET title = #{title}
+        , content = #{content}
+    </insert>
+
+    <!--    메모 삭제 -->
+    <delete id="deleteById">
+        DELETE FROM memo
+        WHERE id = #{id}
+    </delete>
+
+    <!--    메모 검색 -->
+    <select id="findAll">
+        SELECT id, title, created_at
+        FROM memo
+        <if test="searchText != null and searchText !=''">
+            <bind name="pattern" value="'%' + _parameter.getSearchText() + '%'"/>
+            WHERE title LIKE #{pattern}
+            OR content LIKE '%${searchText}%'
+        </if>
+        ORDER BY id DESC
+    </select>
+
+    <!--    메모 조회-->
+    <select id="findById">
+        SELECT title, content, created_at
+        FROM memo
+        WHERE id = #{id}
+    </select>
+
+    <!--    메모 수정 -->
+    <update id="modify">
+        UPDATE memo
+        SET title = #{title}
+          , content = #{content}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

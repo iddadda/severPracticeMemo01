@@ -28,7 +28,7 @@
 
     <!--    메모 조회-->
     <select id="findById">
-        SELECT title, content, created_at
+        SELECT id, title, content, created_at
         FROM memo
         WHERE id = #{id}
     </select>
